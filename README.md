@@ -98,9 +98,11 @@ So a position is written **(x, y, z)**. The Sun might sit at (0, 0, 0) — the
 center — and a planet at (1, 0, 0), meaning "1 unit to the right of the Sun."
 
 A trio of numbers like this is called a **vector**. You can picture a vector as
-an **arrow** pointing from the origin (0,0,0) to that spot. Throughout this
-document, a little arrow over a letter — like **r** with an arrow, written `→r` —
-just means "this is a vector, a bundle of three numbers," not a single number.
+an **arrow** pointing from the origin (0,0,0) to that spot. In the formulas
+below, a symbol carrying a single object label — `r_i` (position), `v_i`
+(velocity), `a_i` (acceleration) — is a **vector**: three numbers bundled
+together. A plain `r` (or `r_ij`) means an ordinary one-number **distance**, and
+`m_i` means an object's mass.
 
 We use **r** for position (think "radius" or "coordinates").
 
@@ -110,27 +112,27 @@ You only need four operations, and they're all common sense:
 
 - **Add** two vectors: add the x's, the y's, and the z's separately.
   `(1, 2, 0) + (3, 0, 5) = (4, 2, 5)`. (Adding arrows = lay them tip-to-tail.)
-- **Subtract** two vectors: `→b − →a` gives the arrow *pointing from a to b*.
+- **Subtract** two vectors: `b − a` gives the arrow *pointing from a to b*.
   This is how we find the **direction from one object to another** — remember
   this, it's the heart of gravity.
 - **Scale** a vector: multiply all three numbers by one ordinary number.
   Doubling a vector makes the arrow twice as long, same direction.
 - **Length** of a vector: how long the arrow is. By the Pythagorean theorem in
-  3D, the length of `→r = (x, y, z)` is
+  3D, the length of `r = (x, y, z)` is
 
   ```
-  |→r| = √(x² + y² + z²)
+  |r| = √(x² + y² + z²)
   ```
 
   The bars `| |` mean "length of." So the **distance between two objects** at
-  positions `→a` and `→b` is the length of their difference, `|→b − →a|`.
+  positions `a` and `b` is the length of their difference, `|b − a|`.
 
 ### Velocity — *how fast, and which way, something moves*
 
 Velocity is also three numbers — it's a vector too. It says how the position is
 changing: how many units per second the object moves in x, in y, and in z. We
 write it **v**. A velocity of (0, 5, 0) means "moving 5 units per second in the
-+y direction." The **length** of the velocity vector, `|→v|`, is the plain
++y direction." The **length** of the velocity vector, `|v|`, is the plain
 **speed** (how fast, ignoring direction).
 
 ### Acceleration — *how the velocity is changing*
@@ -170,8 +172,8 @@ Take two objects, call them *i* and *j* (just labels, like "object #1" and
 "object #2"). Let:
 
 - `m_i`, `m_j` be their masses,
-- `→r_i`, `→r_j` be their positions,
-- `r = |→r_j − →r_i|` be the distance between them,
+- `r_i`, `r_j` be their positions,
+- `r = |r_j − r_i|` be the distance between them,
 - `G` be a fixed number called the **gravitational constant** — it just sets how
   strong gravity is in our chosen units (more on units later).
 
@@ -190,8 +192,8 @@ inverse-square). That fraction bar is doing all the work.
 ### Force has a direction, too
 
 A force isn't just a strength — it points somewhere. Gravity always pulls each
-object **straight toward the other one**. Remember from Section 2 that `→r_j −
-→r_i` is the arrow pointing *from object i to object j*. That's exactly the
+object **straight toward the other one**. Remember from Section 2 that `r_j −
+r_i` is the arrow pointing *from object i to object j*. That's exactly the
 direction object i gets pulled.
 
 To combine "strength" and "direction" into one vector, we take the direction
@@ -200,13 +202,13 @@ dividing by its length `r`), and multiply by the strength. Putting it together,
 the full force vector **on object i, caused by object j**, is:
 
 ```
-  →         m_i · m_j
-  F_ij = G · ───────── · (→r_j − →r_i)
+             m_i · m_j
+  F_ij = G · ───────── · (r_j − r_i)
                 r³
 ```
 
 **Why is it `r³` (r cubed) now, when rule 2 said `r²`?** Look carefully: the
-`(→r_j − →r_i)` on the right is the direction arrow, but its length is `r`, not
+`(r_j − r_i)` on the right is the direction arrow, but its length is `r`, not
 1. Dividing by one extra `r` shrinks it to a pure direction. So we have "one `r`
 to fix the arrow's length" plus "two `r`'s for the inverse-square strength" = `r³`
 on the bottom. It's still an inverse-square law; the cube is just bookkeeping for
@@ -228,8 +230,8 @@ So to get object i's acceleration, divide its gravitational force by its own mas
 `m_i`. Watch what happens — the `m_i` on top cancels the `m_i` on the bottom:
 
 ```
-  →         →                m_j
-  a_i = F_ij ÷ m_i  =  G · ───────── · (→r_j − →r_i)
+                            m_j
+  a_i = F_ij ÷ m_i  =  G · ───────── · (r_j − r_i)
                               r³
 ```
 
@@ -246,9 +248,9 @@ acceleration arrows from every other object j (tip-to-tail, like Section 2). The
 symbol `Σ` (Greek capital sigma) just means **"add up all of these"**:
 
 ```
-  →           →r_j − →r_i
+                      r_j − r_i
   a_i =  Σ  G · m_j · ───────────────
-        j≠i         (r_ij² + ε²)^(3/2)
+        j≠i          (r_ij² + ε²)^(3/2)
 ```
 
 Reading it: "The acceleration of object i is the **sum** (`Σ`), over **every
@@ -342,7 +344,7 @@ watch them disagree. They live in
 
 In every recipe below:
 
-- `→r` is position, `→v` is velocity, `→a` is the gravitational acceleration from
+- `r` is position, `v` is velocity, `a` is the gravitational acceleration from
   Section 3,
 - a subscript `t` means "the value right now," and `t+Δt` means "the value one
   slice later."
@@ -352,8 +354,8 @@ In every recipe below:
 The simplest possible idea: assume nothing changes during the slice.
 
 ```
-  →v(t+Δt) = →v(t) + →a(t) · Δt          (nudge velocity by acceleration × slice)
-  →r(t+Δt) = →r(t) + →v(t) · Δt          (nudge position by the OLD velocity × slice)
+  v(t+Δt) = v(t) + a(t) · Δt          (nudge velocity by acceleration × slice)
+  r(t+Δt) = r(t) + v(t) · Δt          (nudge position by the OLD velocity × slice)
 ```
 
 Line 1: new velocity = old velocity plus "how fast it's changing" (`a`) times the
@@ -374,11 +376,11 @@ Change *one thing*: update the velocity **first**, then use that brand-new
 velocity to move the position.
 
 ```
-  →v(t+Δt) = →v(t) + →a(t) · Δt          (update velocity first)
-  →r(t+Δt) = →r(t) + →v(t+Δt) · Δt        (move position using the NEW velocity)
+  v(t+Δt) = v(t) + a(t) · Δt          (update velocity first)
+  r(t+Δt) = r(t) + v(t+Δt) · Δt        (move position using the NEW velocity)
 ```
 
-The only difference from plain Euler is that line 2 uses `→v(t+Δt)` (the just-
+The only difference from plain Euler is that line 2 uses `v(t+Δt)` (the just-
 updated velocity) instead of the old one. That's it. Astonishingly, this small
 reordering makes the method **symplectic** — a special property (explained in
 5.5) that stops energy from running away. Orbits stay closed and stable for a
@@ -391,15 +393,15 @@ This one is a little more work but much smarter. It uses the acceleration at
 **both ends** of the slice and averages them.
 
 ```
-  →r(t+Δt) = →r(t) + →v(t)·Δt + ½·→a(t)·Δt²
+  r(t+Δt) = r(t) + v(t)·Δt + ½·a(t)·Δt²
 
-  (now compute the new acceleration →a(t+Δt) at that new position)
+  (now compute the new acceleration a(t+Δt) at that new position)
 
-  →v(t+Δt) = →v(t) + ½·(→a(t) + →a(t+Δt))·Δt
+  v(t+Δt) = v(t) + ½·(a(t) + a(t+Δt))·Δt
 ```
 
 - **Line 1** moves the position using the current velocity *plus* a curve
-  correction, `½·→a·Δt²`. (If you've ever seen "distance = ½ · acceleration ·
+  correction, `½·a·Δt²`. (If you've ever seen "distance = ½ · acceleration ·
   time²" for a falling object, this is the same term — it accounts for the path
   curving during the slice instead of going perfectly straight.)
 - **Line 2** updates the velocity using the **average** of the acceleration at
@@ -422,8 +424,8 @@ We treat the "state" of an object as the pair (position, velocity), and note two
 facts:
 
 ```
-  how position changes over time  =  the velocity            (dr/dt = →v)
-  how velocity changes over time  =  the acceleration        (dv/dt = →a, from gravity)
+  how position changes over time  =  the velocity            (dr/dt = v)
+  how velocity changes over time  =  the acceleration        (dv/dt = a, from gravity)
 ```
 
 RK4 samples that pair of rates four times — at the start, twice in the middle,
@@ -494,11 +496,11 @@ more. For one object it's `½ · mass · speed²`; for the whole system we add t
 up (`Σ` = "sum over all objects"):
 
 ```
-  K = Σ  ½ · m_i · |→v_i|²
+  K = Σ  ½ · m_i · |v_i|²
       i
 ```
 
-(Recall `|→v_i|` is the object's speed, from Section 2.)
+(Recall `|v_i|` is the object's speed, from Section 2.)
 
 **Potential energy** is stored energy of *position* — like a ball held up high,
 ready to fall. For gravity it's *negative* (a quirk of the convention: objects
@@ -551,13 +553,13 @@ graph so you can literally watch each integrator's report card in real time. A
 is and which way it's going. Total momentum is the sum over all objects:
 
 ```
-  →P = Σ  m_i · →v_i
+  P = Σ  m_i · v_i
        i
 ```
 
 With no outside pushes, total momentum can't change — this is the same principle
 that makes a rocket recoil when it fires exhaust, or a gun kick back. OrbitLab
-tracks how far `→P` strays from its starting value; it should be essentially zero
+tracks how far `P` strays from its starting value; it should be essentially zero
 (any change is pure numerical error).
 
 ### Center of mass — the balance point
@@ -566,8 +568,8 @@ The **center of mass** is the average position of all the objects, weighted by
 how heavy each one is (heavier objects pull the average toward themselves):
 
 ```
-        Σ  m_i · →r_i
-  →R  = ─────────────
+        Σ  m_i · r_i
+  R  = ─────────────
    cm     Σ  m_i
 ```
 
@@ -586,11 +588,11 @@ operation called the **cross product** (written `×`), which specifically measur
 the part of the motion that goes *around* rather than *toward or away*:
 
 ```
-  →L = Σ  m_i · (→r_i × →v_i)
+  L = Σ  m_i · (r_i × v_i)
        i
 ```
 
-You don't need the details of the cross product; just know that `→L` should stay
+You don't need the details of the cross product; just know that `L` should stay
 constant for an isolated system, and we track its **drift** the same way we track
 energy's. Symplectic integrators tend to conserve it beautifully.
 
@@ -647,26 +649,26 @@ computes. The simulation always runs on the true, consistent numbers.
 If you turn on **collision mode**, two objects that overlap (their centers come
 closer than the sum of their radii) **merge** into a single object. The merge
 obeys the same conservation laws from Section 6, so it's physically sensible.
-Given two objects with masses `m₁, m₂`, positions `→r₁, →r₂`, velocities `→v₁,
-→v₂`, and radii `R₁, R₂`, the merged object is:
+Given two objects with masses `m₁, m₂`, positions `r₁, r₂`, velocities `v₁,
+v₂`, and radii `R₁, R₂`, the merged object is:
 
 ```
   new mass:      m = m₁ + m₂                        (masses simply add)
 
-                     m₁·→v₁ + m₂·→v₂
-  new velocity:  →v = ─────────────────              (total momentum ÷ total mass)
+                     m₁·v₁ + m₂·v₂
+  new velocity:  v = ─────────────────              (total momentum ÷ total mass)
                         m₁ + m₂
 
-                     m₁·→r₁ + m₂·→r₂
-  new position:  →r = ─────────────────              (the two objects' center of mass)
+                     m₁·r₁ + m₂·r₂
+  new position:  r = ─────────────────              (the two objects' center of mass)
                         m₁ + m₂
 
   new radius:    R = (R₁³ + R₂³)^(1/3)               (their volumes add up)
 ```
 
 - **Mass** just adds — nothing is lost.
-- **Velocity** is the momentum-conserving average: total momentum (`m₁→v₁ +
-  m₂→v₂`, from Section 6) divided by the new total mass. This is exactly what
+- **Velocity** is the momentum-conserving average: total momentum (`m₁v₁ +
+  m₂v₂`, from Section 6) divided by the new total mass. This is exactly what
   keeps the system's momentum unchanged through the collision.
 - **Position** is placed at the pair's center of mass, so nothing jumps.
 - **Radius** comes from adding **volumes**, not radii. A ball's volume grows with
