@@ -6,8 +6,8 @@ Built with React, TypeScript, Three.js, and Vite.
 
 > **Note on the math:** the formulas below are written in LaTeX and render as
 > proper equations on GitHub and in the VS Code Markdown preview. If you are
-> reading this as raw text, the equations will appear as their source code
-> between `$` signs — open it in a Markdown viewer to see them typeset.
+> reading this as raw text, the equations appear as their source between `$`
+> signs — open it in a Markdown viewer to see them typeset.
 
 ![OrbitLab — Solar System](docs/solar-system.png)
 
@@ -81,7 +81,7 @@ a *velocity* (how fast and which way it's moving). Nothing tells them to go in a
 circle. Instead, gravity is computed, the objects are nudged, and orbits *emerge
 on their own* — along with everything a real orbit can do: wobble, get pulled
 off course, become egg-shaped, fling a spacecraft, or fall apart entirely. The
-famous "figure-8" dance in the screenshot above is not drawn; three equal masses
+famous "figure-8" dance in the screenshot above is not drawn: three equal masses
 were placed just so, and that pattern *fell out of the math*.
 
 ---
@@ -127,8 +127,8 @@ $$
 |\vec{r}| = \sqrt{x^2 + y^2 + z^2}
 $$
 
-The bars $|\;\cdot\;|$ mean "length of." So the **distance between two objects**
-at positions $\vec{a}$ and $\vec{b}$ is the length of their difference,
+The bars $|\cdot|$ mean "length of." So the **distance between two objects** at
+positions $\vec{a}$ and $\vec{b}$ is the length of their difference,
 $|\vec{b} - \vec{a}|$.
 
 ### Velocity — *how fast, and which way, something moves*
@@ -143,13 +143,13 @@ the plain **speed** (how fast, ignoring direction).
 
 Acceleration is — you guessed it — three more numbers, another vector, written
 $\vec{a}$. It says how the *velocity* is changing over time. Pressing the gas
-pedal in a car is acceleration; so is turning the wheel (that changes the
+pedal in a car is acceleration, and so is turning the wheel (that changes the
 *direction* of your velocity, which counts too).
 
 Here's the chain that runs the whole simulation:
 
 $$
-\text{gravity} \;\Longrightarrow\; \text{acceleration} \;\Longrightarrow\; \text{velocity} \;\Longrightarrow\; \text{position}
+\text{gravity} \quad\Longrightarrow\quad \text{acceleration} \quad\Longrightarrow\quad \text{velocity} \quad\Longrightarrow\quad \text{position}
 $$
 
 Gravity's only job is to set the acceleration. Everything else follows.
@@ -171,14 +171,14 @@ gravitation**, written down in the 1680s. In words, it has just two rules:
 ### Writing rule 1 and rule 2 as a formula
 
 Take two objects, call them $i$ and $j$ (just labels, like "object #1" and
-"object #2"). Let $m_i, m_j$ be their masses, $\vec{r}_i, \vec{r}_j$ their
-positions, $r = |\vec{r}_j - \vec{r}_i|$ the distance between them, and $G$ a
-fixed number called the **gravitational constant** (it just sets how strong
+"object #2"). Let $m_i$ and $m_j$ be their masses, $\vec{r}_i$ and $\vec{r}_j$
+their positions, $r = |\vec{r}_j - \vec{r}_i|$ the distance between them, and $G$
+a fixed number called the **gravitational constant** (it just sets how strong
 gravity is in our chosen units — more on that later). The **strength** of the
 gravitational **force** between them is:
 
 $$
-\text{force} = G\,\frac{m_i \, m_j}{r^2}
+\text{force} = G   \frac{m_i   m_j}{r^2}
 $$
 
 Read it out loud: the force is $G$ times the two masses multiplied together
@@ -198,7 +198,7 @@ dividing by its length $r$), and multiply by the strength. Putting it together,
 the full force vector **on object $i$, caused by object $j$**, is:
 
 $$
-\vec{F}_{ij} = G\,\frac{m_i \, m_j}{r^3}\,(\vec{r}_j - \vec{r}_i)
+\vec{F}_{ij} = G   \frac{m_i   m_j}{r^3}   (\vec{r}_j - \vec{r}_i)
 $$
 
 **Why is it $r^3$ (r cubed) now, when rule 2 said $r^2$?** Look carefully: the
@@ -227,7 +227,7 @@ mass $m_i$. Watch what happens — the $m_i$ on top cancels the $m_i$ on the
 bottom:
 
 $$
-\vec{a}_i = \frac{\vec{F}_{ij}}{m_i} = G\,\frac{m_j}{r^3}\,(\vec{r}_j - \vec{r}_i)
+\vec{a}_i = \frac{\vec{F}_{ij}}{m_i} = G   \frac{m_j}{r^3}   (\vec{r}_j - \vec{r}_i)
 $$
 
 The moving object's **own mass disappears from the answer.** This is the
@@ -243,8 +243,7 @@ acceleration arrows from every other object $j$ (tip-to-tail, like Section 2).
 The symbol $\sum$ (Greek capital sigma) just means **"add up all of these"**:
 
 $$
-\vec{a}_i = \sum_{j \ne i} G\, m_j \,
-\frac{\vec{r}_j - \vec{r}_i}{\left(\,|\vec{r}_j - \vec{r}_i|^2 + \varepsilon^2\,\right)^{3/2}}
+\vec{a}_i = \sum_{j \ne i} G   m_j   \frac{\vec{r}_j - \vec{r}_i}{\left( |\vec{r}_j - \vec{r}_i|^2 + \varepsilon^2 \right)^{3/2}}
 $$
 
 Reading it: "The acceleration of object $i$ is the **sum** ($\sum$), over
@@ -262,8 +261,9 @@ comfortable limit for buttery-smooth interaction.
 
 ### One wrinkle: the $\varepsilon$ (avoiding "divide by zero")
 
-Notice the little $+\,\varepsilon^2$ that appeared on the bottom ($\varepsilon$
-is the Greek letter *epsilon*; think "a tiny bit"). Here's the problem it solves.
+Notice the little $+   \varepsilon^2$ that appeared on the bottom
+($\varepsilon$ is the Greek letter *epsilon*; think "a tiny bit"). Here's the
+problem it solves.
 
 The distance $r$ is on the bottom of the fraction. If two objects ever get
 *extremely* close, $r$ shrinks toward zero — and dividing by (nearly) zero gives
@@ -284,10 +284,10 @@ $$
 Now even if $r$ becomes exactly zero, the bottom is
 $\left(0 + \varepsilon^2\right)^{3/2} = \varepsilon^3$, a small but perfectly
 finite number. The force gets very strong during a close call — but never
-infinite, so the simulation survives. When objects are far apart ($r$ much bigger
-than $\varepsilon$), the extra $\varepsilon^2$ is negligible and gravity behaves
-exactly as normal. Think of $\varepsilon$ as a minimum effective distance. You
-can change it live with the **Softening** slider.
+infinite, so the simulation survives. When objects are far apart ($r$ much
+bigger than $\varepsilon$), the extra $\varepsilon^2$ is negligible and gravity
+behaves exactly as normal. Think of $\varepsilon$ as a minimum effective
+distance. You can change it live with the **Softening** slider.
 
 ---
 
@@ -341,22 +341,24 @@ live and watch them disagree. They live in
 
 In every recipe below, $\vec{r}$ is position, $\vec{v}$ is velocity, and
 $\vec{a}$ is the gravitational acceleration from Section 3. A subscript $t$ means
-"the value right now," and $t{+}\Delta t$ means "the value one slice later."
+"the value right now," and $t + \Delta t$ means "the value one slice later."
 
 ### 5.1 Explicit Euler — the naive recipe
 
-The simplest possible idea: assume nothing changes during the slice.
+The simplest possible idea: assume nothing changes during the slice. First nudge
+the velocity by the acceleration, then move the position by the **old** velocity:
 
 $$
-\begin{aligned}
-\vec{v}_{t+\Delta t} &= \vec{v}_t + \vec{a}_t \, \Delta t \\[4pt]
-\vec{r}_{t+\Delta t} &= \vec{r}_t + \vec{v}_t \, \Delta t
-\end{aligned}
+\vec{v}_{t + \Delta t} = \vec{v}_t + \vec{a}_t   \Delta t
 $$
 
-Line 1: new velocity = old velocity plus "how fast it's changing" ($\vec{a}$)
-times the slice length. Line 2: new position = old position plus the **old**
-velocity times the slice.
+$$
+\vec{r}_{t + \Delta t} = \vec{r}_t + \vec{v}_t   \Delta t
+$$
+
+The first line reads: new velocity = old velocity plus "how fast it's changing"
+($\vec{a}$) times the slice length. The second: new position = old position plus
+the **old** velocity times the slice.
 
 It's honest and easy, but it has a fatal flaw for orbits: it only ever looks at
 the acceleration at the *start* of the slice. On a curved orbit the real
@@ -369,46 +371,47 @@ orbit unravel. ([`euler.ts`](src/physics/integrators/euler.ts))
 ### 5.2 Semi-implicit Euler — one tiny change, huge improvement
 
 Change *one thing*: update the velocity **first**, then use that brand-new
-velocity to move the position.
+velocity to move the position:
 
 $$
-\begin{aligned}
-\vec{v}_{t+\Delta t} &= \vec{v}_t + \vec{a}_t \, \Delta t \\[4pt]
-\vec{r}_{t+\Delta t} &= \vec{r}_t + \vec{v}_{t+\Delta t} \, \Delta t
-\end{aligned}
+\vec{v}_{t + \Delta t} = \vec{v}_t + \vec{a}_t   \Delta t
 $$
 
-The only difference from plain Euler is that line 2 uses $\vec{v}_{t+\Delta t}$
-(the just-updated velocity) instead of the old one. That's it. Astonishingly,
-this small reordering makes the method **symplectic** — a special property
-(explained in 5.5) that stops energy from running away. Orbits stay closed and
-stable for a long time. A lovely example of how *how* you do the arithmetic
-matters as much as *what* arithmetic you do.
+$$
+\vec{r}_{t + \Delta t} = \vec{r}_t + \vec{v}_{t + \Delta t}   \Delta t
+$$
+
+The only difference from plain Euler is that the second line uses
+$\vec{v}_{t + \Delta t}$ (the just-updated velocity) instead of the old one.
+That's it. Astonishingly, this small reordering makes the method **symplectic** —
+a special property (explained in 5.5) that stops energy from running away. Orbits
+stay closed and stable for a long time. A lovely example of how *how* you do the
+arithmetic matters as much as *what* arithmetic you do.
 ([`semiImplicitEuler.ts`](src/physics/integrators/semiImplicitEuler.ts))
 
 ### 5.3 Velocity Verlet / Leapfrog — the default, and the best all-rounder
 
 This one is a little more work but much smarter. It uses the acceleration at
-**both ends** of the slice and averages them.
+**both ends** of the slice and averages them. First move the position:
 
 $$
-\begin{aligned}
-\vec{r}_{t+\Delta t} &= \vec{r}_t + \vec{v}_t \, \Delta t + \tfrac{1}{2}\,\vec{a}_t \, \Delta t^2 \\[4pt]
-\vec{v}_{t+\Delta t} &= \vec{v}_t + \tfrac{1}{2}\left(\vec{a}_t + \vec{a}_{t+\Delta t}\right)\Delta t
-\end{aligned}
+\vec{r}_{t + \Delta t} = \vec{r}_t + \vec{v}_t   \Delta t + \tfrac{1}{2}   \vec{a}_t   \Delta t^2
 $$
 
-(Between the two lines, the engine computes the new acceleration
-$\vec{a}_{t+\Delta t}$ at the freshly updated position.)
+Then, after computing the new acceleration $\vec{a}_{t + \Delta t}$ at that fresh
+position, update the velocity with the **average** of the old and new
+accelerations:
 
-- The **first line** moves the position using the current velocity *plus* a curve
-  correction, $\tfrac{1}{2}\,\vec{a}_t\,\Delta t^2$. (If you've ever seen
-  "distance $= \tfrac{1}{2}\,a\,t^2$" for a falling object, this is the same
-  term — it accounts for the path curving during the slice instead of going
-  perfectly straight.)
-- The **second line** updates the velocity using the **average** of the
-  acceleration at the start and at the end of the slice. Averaging start-and-end
-  is far fairer than Euler's start-only guess.
+$$
+\vec{v}_{t + \Delta t} = \vec{v}_t + \tfrac{1}{2} \left( \vec{a}_t + \vec{a}_{t + \Delta t} \right) \Delta t
+$$
+
+- The **position** update adds a curve correction, $\tfrac{1}{2} \vec{a}_t \Delta t^2$.
+  (If you've ever seen "distance $= \tfrac{1}{2} a t^2$" for a falling object,
+  this is the same term — it accounts for the path curving during the slice
+  instead of going perfectly straight.)
+- The **velocity** update uses the average of the start and end accelerations,
+  which is far fairer than Euler's start-only guess.
 
 Because it looks at both ends, it needs to compute gravity **twice per step**
 (once before moving, once after) — a little more expensive, but worth it. It is
@@ -427,7 +430,7 @@ facts: position changes at the rate of the velocity, and velocity changes at the
 rate of the acceleration —
 
 $$
-\frac{d\vec{r}}{dt} = \vec{v}, \qquad\qquad \frac{d\vec{v}}{dt} = \vec{a}(\vec{r})
+\frac{d\vec{r}}{dt} = \vec{v} \qquad\qquad \frac{d\vec{v}}{dt} = \vec{a}(\vec{r})
 $$
 
 RK4 samples those rates four times — at the start, twice in the middle, and at
@@ -441,7 +444,7 @@ the end — each sample using the previous one to estimate where to look:
 Then it blends them, counting the two midpoint peeks twice as heavily:
 
 $$
-\text{new state} = \text{old state} + \frac{\Delta t}{6}\left(k_1 + 2k_2 + 2k_3 + k_4\right)
+\text{new state} = \text{old state} + \frac{\Delta t}{6} \left( k_1 + 2k_2 + 2k_3 + k_4 \right)
 $$
 
 (The divisor 6 is just $1 + 2 + 2 + 1$.) This gives the **smallest error for a
@@ -495,11 +498,12 @@ panel and plotted in the graphs. They're computed in
 Energy comes in two forms here.
 
 **Kinetic energy** is the energy of *motion*. A faster or heavier object has
-more. For one object it's $\tfrac{1}{2}\,\text{mass}\times\text{speed}^2$; for the
-whole system we add them up (the $\sum_i$ means "sum over all objects $i$"):
+more. For one object it's $\tfrac{1}{2}   \text{mass} \times \text{speed}^2$;
+for the whole system we add them up (the $\sum_i$ means "sum over all objects
+$i$"):
 
 $$
-K = \sum_i \tfrac{1}{2}\, m_i \, |\vec{v}_i|^2
+K = \sum_i \tfrac{1}{2}   m_i   |\vec{v}_i|^2
 $$
 
 (Recall $|\vec{v}_i|$ is the object's speed, from Section 2.)
@@ -510,7 +514,7 @@ ready to fall. For gravity it's *negative* (a convention: objects that have
 pair of objects is:
 
 $$
-U = -\sum_{i \lt j} G\,\frac{m_i \, m_j}{\sqrt{|\vec{r}_j - \vec{r}_i|^2 + \varepsilon^2}}
+U = -\sum_{i \lt j} G   \frac{m_i   m_j}{\sqrt{|\vec{r}_j - \vec{r}_i|^2 + \varepsilon^2}}
 $$
 
 The $\sum_{i \lt j}$ means "sum over every *pair* of objects, counting each pair
@@ -535,10 +539,10 @@ Real integrators aren't perfect, so $E$ wanders a little. We measure that
 wandering as **energy drift**: the fractional change from where it started.
 
 $$
-\text{drift} = \frac{\left|E_{\text{now}} - E_{\text{start}}\right|}{\left|E_{\text{start}}\right|}
+\text{drift} = \frac{\left| E_{\text{now}} - E_{\text{start}} \right|}{\left| E_{\text{start}} \right|}
 $$
 
-The bars $|\;\cdot\;|$ mean "absolute value" (ignore any minus sign — we only care
+The bars $|\cdot|$ mean "absolute value" (ignore any minus sign — we only care
 about the *size* of the change). A drift of $0.0001$ means the energy is off by
 one-hundredth of one percent — excellent. A drift of $0.5$ means it's off by 50%
 — the simulation has gone badly wrong. OrbitLab shows this on a gauge and a graph
@@ -551,7 +555,7 @@ tiny** line is what you want.
 is and which way it's going. Total momentum is the sum over all objects:
 
 $$
-\vec{P} = \sum_i m_i \, \vec{v}_i
+\vec{P} = \sum_i m_i   \vec{v}_i
 $$
 
 With no outside pushes, total momentum can't change — the same principle that
@@ -565,7 +569,7 @@ The **center of mass** is the average position of all the objects, weighted by
 how heavy each one is (heavier objects pull the average toward themselves):
 
 $$
-\vec{R}_{\text{cm}} = \frac{\sum_i m_i \, \vec{r}_i}{\sum_i m_i}
+\vec{R}_{\text{cm}} = \frac{\sum_i m_i   \vec{r}_i}{\sum_i m_i}
 $$
 
 Because every gravitational pull comes in an equal-and-opposite pair (object $i$
@@ -583,7 +587,7 @@ operation called the **cross product** (written $\times$), which specifically
 measures the part of the motion that goes *around* rather than *toward or away*:
 
 $$
-\vec{L} = \sum_i m_i \, (\vec{r}_i \times \vec{v}_i)
+\vec{L} = \sum_i m_i   (\vec{r}_i \times \vec{v}_i)
 $$
 
 You don't need the details of the cross product; just know that $\vec{L}$ should
@@ -599,12 +603,11 @@ front and center instead of hiding them.
 
 ## 7. Units: why we don't use kilometers and kilograms
 
-Real astronomical numbers are absurd. The Sun weighs about
-$2 \times 10^{30}$ kilograms (that's a 2 followed by 30 zeros). The Earth–Sun
-distance is about $1.5 \times 10^{11}$ meters. Computers store numbers with
-limited precision, and multiplying gigantic numbers by tiny ones throws away
-accuracy fast — like trying to add a penny to a billion dollars and keep track of
-the penny.
+Real astronomical numbers are absurd. The Sun weighs about $2 \times 10^{30}$
+kilograms (that's a 2 followed by 30 zeros). The Earth–Sun distance is about
+$1.5 \times 10^{11}$ meters. Computers store numbers with limited precision, and
+multiplying gigantic numbers by tiny ones throws away accuracy fast — like trying
+to add a penny to a billion dollars and keep track of the penny.
 
 The professional fix is to **choose friendlier units.** For solar-system-scale
 presets, OrbitLab measures:
@@ -644,27 +647,39 @@ If you turn on **collision mode**, two objects that overlap (their centers come
 closer than the sum of their radii) **merge** into a single object. The merge
 obeys the same conservation laws from Section 6, so it's physically sensible.
 Given two objects with masses $m_1, m_2$, positions $\vec{r}_1, \vec{r}_2$,
-velocities $\vec{v}_1, \vec{v}_2$, and radii $R_1, R_2$, the merged object is:
+velocities $\vec{v}_1, \vec{v}_2$, and radii $R_1, R_2$, the merged object's mass
+is simply the sum:
 
 $$
-\begin{aligned}
-m_{\text{new}} &= m_1 + m_2 &&\text{(masses simply add)} \\[6pt]
-\vec{v}_{\text{new}} &= \frac{m_1 \vec{v}_1 + m_2 \vec{v}_2}{m_1 + m_2} &&\text{(total momentum} \div \text{total mass)} \\[6pt]
-\vec{r}_{\text{new}} &= \frac{m_1 \vec{r}_1 + m_2 \vec{r}_2}{m_1 + m_2} &&\text{(the two objects' center of mass)} \\[6pt]
-R_{\text{new}} &= \left(R_1^3 + R_2^3\right)^{1/3} &&\text{(their volumes add up)}
-\end{aligned}
+m_{\text{new}} = m_1 + m_2
+$$
+
+its velocity is the momentum-conserving average (total momentum divided by total
+mass):
+
+$$
+\vec{v}_{\text{new}} = \frac{m_1 \vec{v}_1 + m_2 \vec{v}_2}{m_1 + m_2}
+$$
+
+its position is placed at the pair's center of mass:
+
+$$
+\vec{r}_{\text{new}} = \frac{m_1 \vec{r}_1 + m_2 \vec{r}_2}{m_1 + m_2}
+$$
+
+and its radius comes from adding the two **volumes**:
+
+$$
+R_{\text{new}} = \left( R_1^3 + R_2^3 \right)^{1/3}
 $$
 
 - **Mass** just adds — nothing is lost.
-- **Velocity** is the momentum-conserving average: total momentum
-  ($m_1\vec{v}_1 + m_2\vec{v}_2$, from Section 6) divided by the new total mass.
-  This is exactly what keeps the system's momentum unchanged through the
-  collision.
-- **Position** is placed at the pair's center of mass, so nothing jumps.
-- **Radius** comes from adding **volumes**, not radii. A ball's volume grows with
-  the *cube* of its radius, so to combine two balls we add their $R^3$ values and
-  take the cube root. (Adding the radii directly would wrongly inflate the
-  result.)
+- **Velocity** is the momentum-conserving average, which is exactly what keeps
+  the system's total momentum unchanged through the collision.
+- **Position** sits at the center of mass, so nothing jumps.
+- **Radius** uses volumes, not radii: a ball's volume grows with the *cube* of
+  its radius, so we add the $R^3$ values and take the cube root. (Adding the
+  radii directly would wrongly inflate the result.)
 
 Notice that **energy is deliberately not conserved** here — a real inelastic
 collision (two lumps of clay sticking) turns the energy of their relative motion
