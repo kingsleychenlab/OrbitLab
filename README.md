@@ -510,10 +510,10 @@ ready to fall. For gravity it's *negative* (a convention: objects that have
 pair of objects is:
 
 $$
-U = -\sum_{i<j} G\,\frac{m_i \, m_j}{\sqrt{|\vec{r}_j - \vec{r}_i|^2 + \varepsilon^2}}
+U = -\sum_{i \lt j} G\,\frac{m_i \, m_j}{\sqrt{|\vec{r}_j - \vec{r}_i|^2 + \varepsilon^2}}
 $$
 
-The $\sum_{i<j}$ means "sum over every *pair* of objects, counting each pair
+The $\sum_{i \lt j}$ means "sum over every *pair* of objects, counting each pair
 once." Closer pairs contribute more (a bigger negative number). That same
 softening $\varepsilon$ from Section 3 appears here so energy and force stay
 consistent with each other.
